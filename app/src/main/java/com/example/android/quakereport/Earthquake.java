@@ -1,10 +1,5 @@
 package com.example.android.quakereport;
 
-import android.text.format.DateFormat;
-
-import java.util.Calendar;
-import java.util.Date;
-
 /**
  * {@link Earthquake} represents a single Earthquake.
  * Each object has 3 properties: magnitude, location, and date.
@@ -24,35 +19,35 @@ class Earthquake {
     /**
      * Create a new Earthquake object.
      *
-     * @param magnitude is the magnitude of the earthquake
      * @param location is the location of the earthquake
+     * @param magnitude is the magnitude of the earthquake
      * @param date is the date the earthquake has occurred.
      * */
 
-    public Earthquake(double magnitude, String location, String date) {
-        mMagnitude = magnitude;
+     Earthquake(String location, double magnitude, String date) {
         mLocation = location;
+        mMagnitude = magnitude;
         mDate = date;
-    }
-
-    /**
-     * Get the magnitude of the earthquake
-     * */
-    public double getMagnitude() {
-        return mMagnitude;
     }
 
     /**
      * Get the location of the earthquake
      * */
-    public String getLocation() {
+    String getLocation() {
         return mLocation;
+    }
+
+    /**
+     * Get the magnitude of the earthquake
+     * */
+    double getMagnitude() {
+        return mMagnitude;
     }
 
     /**
      * Get the date of the earthquake
      * */
-    public String getDate() {
+    String getDate() {
         return mDate;
     }
 }
