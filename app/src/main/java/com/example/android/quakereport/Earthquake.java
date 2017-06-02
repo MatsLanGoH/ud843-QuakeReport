@@ -26,7 +26,7 @@ class Earthquake {
      *
      * @param magnitude is the magnitude of the earthquake
      * @param location is the location of the earthquake
-     * @param date is the date the earthquake has occured.
+     * @param date is the date the earthquake has occurred.
      * */
 
     public Earthquake(double magnitude, String location, String date) {
