@@ -12,22 +12,22 @@ class Earthquake {
     // Location of the earthquake
     private String mLocation;
 
-    // Date of the earthquake
-    // TODO: use correct data type instead of placeholder String
-    private String mDate;
+    // Time of the earthquake
+    private long mTimeInMilliseconds;
 
     /**
      * Create a new Earthquake object.
      *
      * @param magnitude is the magnitude of the earthquake
      * @param location is the location of the earthquake
-     * @param date is the date the earthquake has occurred.
+     * @param timeInMilliseconds is the time in milliseconds (from Epoch)
+     *                           when the earthquake happened.
      * */
 
-     Earthquake(String magnitude, String location, String date) {
+     Earthquake(String magnitude, String location, long timeInMilliseconds) {
         mMagnitude = magnitude;
         mLocation = location;
-        mDate = date;
+        mTimeInMilliseconds = timeInMilliseconds;
     }
 
     /**
@@ -47,7 +47,7 @@ class Earthquake {
     /**
      * Get the date of the earthquake
      * */
-    String getDate() {
-        return mDate;
+    long getTimeInMilliseconds() {
+        return mTimeInMilliseconds;
     }
 }

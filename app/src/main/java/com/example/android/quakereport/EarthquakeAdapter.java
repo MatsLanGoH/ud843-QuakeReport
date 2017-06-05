@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * {@link EarthquakeAdapter} is an {@link ArrayAdapter} that can provide the layout for each list
@@ -69,12 +71,45 @@ class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
             // set this text on the location TextView.
             locationTextView.setText(currentEarthquake.getLocation());
 
+
+            // Create a new Date object from the time in milliseconds of the earthquake
+            Date dateObject = new Date(currentEarthquake.getTimeInMilliseconds());
+
             // Find the TextView in the list_item.xml with the ID date.
             TextView dateTextView = (TextView) listItemView.findViewById(R.id.date);
-            // Get the date from the current Earthquake object and
-            // set this text on the date TextView.
-            dateTextView.setText(currentEarthquake.getDate());
+
+            // Format the date string (i.e. "Mar 3, 1984")
+            String formattedDate = formatDate(dateObject);
+
+            // Display the date of the current Earthquake in that TextView
+            dateTextView.setText(formattedDate);
+
+
+            // Find the TextView in the list_item.xml with the ID time.
+            TextView timeTextView = (TextView) listItemView.findViewById(R.id.time);
+
+            // Format the date string (i.e. "3:00 PM")
+            String formattedTime = formatTime(dateObject);
+
+            // Display the time of the current Earthquake in that TextView
+            timeTextView.setText(formattedTime);
         }
         return listItemView;
+    }
+
+    /**
+     * Return the formatted date string from a Date object
+     */
+    private String formatDate(Date dateObject) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("LLL dd, yyyy");
+        return dateFormat.format(dateObject);
+    }
+
+    /**
+     * Return the formatted time string from a Date object
+     */
+    private String formatTime(Date dateObject) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("h:mm a");
+        return dateFormat.format(dateObject);
     }
 }
