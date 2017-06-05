@@ -140,42 +140,42 @@ class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
      */
     private int getMagnitudeColor(double magnitude) {
 
-        int resourceId;
+        int magnitudeColorResourceId;
+        int magnitudeFloor = (int) Math.floor(magnitude);
 
-        switch ((int) magnitude) {
+        switch (magnitudeFloor) {
             case 1:
-                resourceId = R.color.magnitude1;
+                magnitudeColorResourceId = R.color.magnitude1;
                 break;
             case 2:
-                resourceId = R.color.magnitude2;
+                magnitudeColorResourceId = R.color.magnitude2;
                 break;
             case 3:
-                resourceId = R.color.magnitude4;
+                magnitudeColorResourceId = R.color.magnitude4;
                 break;
             case 5:
-                resourceId = R.color.magnitude5;
+                magnitudeColorResourceId = R.color.magnitude5;
                 break;
             case 6:
-                resourceId = R.color.magnitude6;
+                magnitudeColorResourceId = R.color.magnitude6;
                 break;
             case 7:
-                resourceId = R.color.magnitude7;
+                magnitudeColorResourceId = R.color.magnitude7;
                 break;
             case 8:
-                resourceId = R.color.magnitude8;
+                magnitudeColorResourceId = R.color.magnitude8;
                 break;
             case 9:
-                resourceId = R.color.magnitude9;
+                magnitudeColorResourceId = R.color.magnitude9;
                 break;
             case 10:
-                resourceId = R.color.magnitude10plus;
+                magnitudeColorResourceId = R.color.magnitude10plus;
                 break;
             default:
-                resourceId = R.color.magnitude1;
+                magnitudeColorResourceId = R.color.magnitude1;
                 break;
         }
-
-        return ContextCompat.getColor(getContext(), resourceId);
+        return ContextCompat.getColor(getContext(), magnitudeColorResourceId);
     }
 
     /**
