@@ -2,7 +2,9 @@ package com.example.android.quakereport;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -50,6 +52,37 @@ final class QueryUtils {
 
             // TODO: Parse the response given by the SAMPLE_JSON_RESPONSE string and
             // build up a list of Earthquake objects with the corresponding data.
+
+            // Convert SAMPLE_RESPONSE_STRING into a JSONObject.
+            JSONObject jsonObj = new JSONObject(SAMPLE_JSON_RESPONSE);
+
+            // Extract "features" JSONArray
+            JSONArray features = jsonObj.getJSONArray("features");
+
+            // Loop through each feature in the array
+            for (int i = 0; i < features.length(); i++) {
+
+                // Get earthquake JSONObject at position i
+                JSONObject quake = features.getJSONObject(i);
+
+                // Get "properties" JSONObject
+                JSONObject properties = quake.getJSONObject("properties");
+
+                // Extract "mag" for magnitude
+                String magnitude = properties.getString("mag");
+
+                // Extract "place" for location
+                String location = properties.getString("place");
+
+                // Extract "time" for time
+                String time = properties.getString("time");
+
+                // Create Earthquake java object from magnitude, location, time
+                Earthquake earthquake = new Earthquake(magnitude, location, time);
+
+                // Add Earthquake to list of earthquakes.
+                earthquakes.add(earthquake);
+            }
 
         } catch (JSONException e) {
 
