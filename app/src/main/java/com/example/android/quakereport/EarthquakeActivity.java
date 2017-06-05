@@ -40,7 +40,7 @@ public class EarthquakeActivity extends AppCompatActivity {
         // Create an {@link EarthquakeAdapter}, whose data source is a list of
         // {@link Earthquake}s. The adapter knows how to create list item views
         // for each item in the list.
-        EarthquakeAdapter earthquakeAdapter = new EarthquakeAdapter(this, earthquakes);
+        final EarthquakeAdapter earthquakeAdapter = new EarthquakeAdapter(this, earthquakes);
 
         // Find a reference to the {@link ListView} in the layout
         ListView earthquakeListView = (ListView) findViewById(R.id.list);
@@ -72,8 +72,8 @@ public class EarthquakeActivity extends AppCompatActivity {
      * @param url the address of the site to open.
      * */
     private void openWebPage(String url) {
-        Uri webpage = Uri.parse(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        Uri webPage = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, webPage);
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
