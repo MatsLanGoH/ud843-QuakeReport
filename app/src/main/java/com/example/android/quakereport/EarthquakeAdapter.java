@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * {@link EarthquakeAdapter} is an {@link ArrayAdapter} that can provide the layout for each list
@@ -124,7 +125,7 @@ class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
      * Return the formatted date string from a Date object
      */
     private String formatDate(Date dateObject) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("LLL dd, yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("LLL dd, yyyy", Locale.US);
         return dateFormat.format(dateObject);
     }
 
@@ -132,7 +133,7 @@ class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
      * Return the formatted time string from a Date object
      */
     private String formatTime(Date dateObject) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("h:mm a");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("h:mm a", Locale.US);
         return dateFormat.format(dateObject);
     }
 }
