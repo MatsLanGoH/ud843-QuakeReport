@@ -33,13 +33,13 @@ public class EarthquakeActivity extends AppCompatActivity {
 
         // Create a fake list of earthquake locations.
         ArrayList<Earthquake> earthquakes = new ArrayList<>();
-        earthquakes.add(new Earthquake("San Francisco", 5.0, "2017-01-01"));
-        earthquakes.add(new Earthquake("London", 5.0, "2017-01-01"));
-        earthquakes.add(new Earthquake("Tokyo", 5.0, "2017-01-01"));
-        earthquakes.add(new Earthquake("Mexico City", 5.0, "2017-01-01"));
-        earthquakes.add(new Earthquake("Moscow", 5.0, "2017-01-01"));
-        earthquakes.add(new Earthquake("Rio de Janeiro", 5.0, "2017-01-01"));
-        earthquakes.add(new Earthquake("Paris", 5.0, "2017-01-01"));
+        earthquakes.add(new Earthquake("5.0", "San Francisco", "2017-01-01"));
+        earthquakes.add(new Earthquake("5.0", "London", "2017-01-01"));
+        earthquakes.add(new Earthquake("5.0", "Tokyo", "2017-01-01"));
+        earthquakes.add(new Earthquake("5.0", "Mexico City", "2017-01-01"));
+        earthquakes.add(new Earthquake("5.0", "Moscow", "2017-01-01"));
+        earthquakes.add(new Earthquake("5.0", "Rio de Janeiro", "2017-01-01"));
+        earthquakes.add(new Earthquake("5.0", "Paris", "2017-01-01"));
 
         // Create an {@link EarthquakeAdapter}, whose data source is a list of
         // {@link Earthquake}s. The adapter knows how to create list item views
