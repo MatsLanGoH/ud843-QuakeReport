@@ -15,9 +15,10 @@
  */
 package com.example.android.quakereport;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -56,9 +57,25 @@ public class EarthquakeActivity extends AppCompatActivity {
                 // Get the {@link Earthquake} object at the given position the user clicked on
                 Earthquake earthquake = earthquakes.get(position);
 
-                Log.v(LOG_TAG, earthquake.getUrl());
+                // Get the URL from the earthquake object
+                String url = earthquake.getUrl();
+
+                // Open the URL in the system browser
+                openWebPage(url);
 
             }
         });
+    }
+
+    /**
+     * Opens a website in the system browser
+     * @param url the address of the site to open.
+     * */
+    private void openWebPage(String url) {
+        Uri webpage = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }
