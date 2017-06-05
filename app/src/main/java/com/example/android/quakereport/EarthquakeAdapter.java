@@ -1,8 +1,10 @@
 package com.example.android.quakereport;
 
 import android.app.Activity;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,13 +64,23 @@ class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
         if (currentEarthquake != null) {
             // Find the TextView in the list_item.xml with the ID magnitude.
-            TextView nameTextView = (TextView) listItemView.findViewById(R.id.magnitude);
+            TextView magnitudeView = (TextView) listItemView.findViewById(R.id.magnitude);
 
             // Get magnitude for current earthquake
             String formattedMagnitude = formatMagnitude(currentEarthquake.getMagnitude());
 
             // Display the magnitude of the current earthquake in that TextView.
-            nameTextView.setText(formattedMagnitude);
+            magnitudeView.setText(formattedMagnitude);
+
+            // Set the proper background color on the magnitude circle.
+            // Fetch the background from the TextView, which is a GradientDrawable.
+            GradientDrawable magnitudeCircle = (GradientDrawable) magnitudeView.getBackground();
+
+            // Get the appropriate background color based on the current earthquake magnitude.
+            int magnitudeColor = getMagnitudeColor(currentEarthquake.getMagnitude());
+
+            // Set the color on the magnitude circle.
+            magnitudeCircle.setColor(magnitudeColor);
 
 
             // Get the distance and location from the current earthquake.
@@ -121,6 +133,49 @@ class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
             timeTextView.setText(formattedTime);
         }
         return listItemView;
+    }
+
+    /**
+     * Return the correct color value based on the current earthquake's magnitude value.
+     */
+    private int getMagnitudeColor(double magnitude) {
+
+        int resourceId;
+
+        switch ((int) magnitude) {
+            case 1:
+                resourceId = R.color.magnitude1;
+                break;
+            case 2:
+                resourceId = R.color.magnitude2;
+                break;
+            case 3:
+                resourceId = R.color.magnitude4;
+                break;
+            case 5:
+                resourceId = R.color.magnitude5;
+                break;
+            case 6:
+                resourceId = R.color.magnitude6;
+                break;
+            case 7:
+                resourceId = R.color.magnitude7;
+                break;
+            case 8:
+                resourceId = R.color.magnitude8;
+                break;
+            case 9:
+                resourceId = R.color.magnitude9;
+                break;
+            case 10:
+                resourceId = R.color.magnitude10plus;
+                break;
+            default:
+                resourceId = R.color.magnitude1;
+                break;
+        }
+
+        return ContextCompat.getColor(getContext(), resourceId);
     }
 
     /**
