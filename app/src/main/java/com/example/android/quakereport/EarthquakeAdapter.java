@@ -21,6 +21,7 @@ import java.util.Date;
 class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
     private static final String LOG_TAG = Earthquake.class.getSimpleName();
+    private static final String LOCATION_SEPARATOR = " of ";
 
     /**
      * This is a custom constructor.
@@ -61,15 +62,37 @@ class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
             // Find the TextView in the list_item.xml with the ID magnitude.
             TextView nameTextView = (TextView) listItemView.findViewById(R.id.magnitude);
 
-            // Get the magnitude from the current Earthquake object and
-            // set this text on the magnitude TextView.
+
+            // Display the magnitude of the current earthquake in that TextView.
             nameTextView.setText(currentEarthquake.getMagnitude());
 
+
+
+            // Get the distance and location from the current earthquake.
+            String originalLocation = currentEarthquake.getLocation();
+
+            String primaryLocation;
+            String locationOffset;
+
+            // Split location string into substrings if location offset is given.
+            if (originalLocation.contains(LOCATION_SEPARATOR)) {
+                String[] parts = originalLocation.split(LOCATION_SEPARATOR);
+                locationOffset = parts[0] + LOCATION_SEPARATOR;
+                primaryLocation = parts[1];
+            } else {
+                locationOffset = getContext().getString(R.string.near_the);
+                primaryLocation = originalLocation;
+            }
+
+            // Find the TextView in the list_item.xml with the ID distance.
+            TextView locationOffsetTextView = (TextView) listItemView.findViewById(R.id.location_offset);
+            // Display the distance of the current earthquake in that TextView.
+            locationOffsetTextView.setText(locationOffset);
+
             // Find the TextView in the list_item.xml with the ID location.
-            TextView locationTextView = (TextView) listItemView.findViewById(R.id.location);
-            // Get the location from the current Earthquake object and
-            // set this text on the location TextView.
-            locationTextView.setText(currentEarthquake.getLocation());
+            TextView locationTextView = (TextView) listItemView.findViewById(R.id.primary_location);
+            // Display the location of the current earthquake in that TextView.
+            locationTextView.setText(primaryLocation);
 
 
             // Create a new Date object from the time in milliseconds of the earthquake
