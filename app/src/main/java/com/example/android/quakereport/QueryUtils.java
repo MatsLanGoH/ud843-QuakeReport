@@ -40,7 +40,7 @@ final class QueryUtils {
      * Return a list of {@link Earthquake} objects that has been built up from
      * parsing a JSON response.
      */
-    public static ArrayList<Earthquake> extractEarthquakes() {
+    static ArrayList<Earthquake> extractEarthquakes() {
 
         // Create an empty ArrayList that we can start adding earthquakes to.
         ArrayList<Earthquake> earthquakes = new ArrayList<>();
@@ -69,7 +69,7 @@ final class QueryUtils {
                 JSONObject properties = currentEarthquake.getJSONObject("properties");
 
                 // Extract "mag" for magnitude
-                String magnitude = properties.getString("mag");
+                double magnitude = properties.getDouble("mag");
 
                 // Extract "place" for location
                 String location = properties.getString("place");
