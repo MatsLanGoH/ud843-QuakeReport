@@ -103,28 +103,6 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
     }
 
     /**
-     * AsyncTaskLoader to load the earthquake data in the background
-     **/
-    public static class EarthquakeLoader extends AsyncTaskLoader<List<Earthquake>> {
-
-        public EarthquakeLoader(Context context) {
-            super(context);
-            // TODO: Finish implementing this constructor
-        }
-
-        @Override
-        protected void onStartLoading() {
-            forceLoad();
-        }
-
-        @Override
-        public List<Earthquake> loadInBackground() {
-            // TODO: Implement this method
-            return null;
-        }
-    }
-
-    /**
      * AsyncTask to download Earthquake data in the background
      **/
     private class EarthquakeAsyncTask extends AsyncTask<String, Void, List<Earthquake>> {
