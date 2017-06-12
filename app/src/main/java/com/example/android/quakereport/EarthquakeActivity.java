@@ -82,17 +82,6 @@ public class EarthquakeActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Opens a website in the system browser
-     * @param url the address of the site to open.
-     * */
-    private void openWebPage(String url) {
-        Uri webPage = Uri.parse(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, webPage);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-        }
-    }
 
     /**
      * AsyncTask to download Earthquake data in the background
