@@ -15,6 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Helper methods related to requesting and receiving earthquake data from USGS.
@@ -34,9 +35,9 @@ final class QueryUtils {
 
 
     /**
-     * Query the USGS dataset and return a {@link ArrayList<Earthquake>} to represent a list of earthquakes.
+     * Query the USGS dataset and return a {@link List<Earthquake>} to represent a list of earthquakes.
      */
-     static ArrayList<Earthquake> fetchEarthquakeData(String requestUrl) {
+     static List<Earthquake> fetchEarthquakeData(String requestUrl) {
 
         // Create URL object
         URL url = createUrl(requestUrl);
@@ -49,12 +50,8 @@ final class QueryUtils {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
 
-        // Create ArrayList of earthquakes
-        ArrayList<Earthquake> earthquakes;
-        earthquakes = extractEarthquakes(jsonResponse);
-
-        // Return ArrayList
-        return earthquakes;
+        // Create ArrayList of earthquakes and return it.
+        return extractFeatureFromJson(jsonResponse);
     }
 
 
@@ -95,7 +92,7 @@ final class QueryUtils {
 
             // If the request was successful (response code 200)
             // then read the input stream and parse the response
-            if (urlConnection.getResponseCode() == 200) {
+            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
             } else {
@@ -140,10 +137,10 @@ final class QueryUtils {
      * Return a list of {@link Earthquake} objects that has been built up from
      * parsing a JSON response.
      */
-    private static ArrayList<Earthquake> extractEarthquakes(String jsonResponse) {
+    private static List<Earthquake> extractFeatureFromJson(String jsonResponse) {
 
         // Create an empty ArrayList that we can start adding earthquakes to.
-        ArrayList<Earthquake> earthquakes = new ArrayList<>();
+        List<Earthquake> earthquakes = new ArrayList<>();
 
         // Catch the exception so the app doesn't crash, and print the error message to LogCat.
         try {
