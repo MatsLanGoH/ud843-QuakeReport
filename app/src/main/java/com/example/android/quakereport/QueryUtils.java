@@ -6,11 +6,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 /**
@@ -55,6 +58,7 @@ final class QueryUtils {
         String jsonResponse = null;
         try {
             jsonResponse = makeHttpRequest(url);
+            Log.v(LOG_TAG, "JSON Response: " + jsonResponse);
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
@@ -108,7 +112,8 @@ final class QueryUtils {
             // If the request was successful (response code 200)
             // then read the input stream and parse the response
             if (urlConnection.getResponseCode() == 200) {
-                Log.v(LOG_TAG, "Successful response: " + urlConnection.getResponseCode());
+                inputStream = urlConnection.getInputStream();
+                jsonResponse = readFromStream(inputStream);
             } else {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
@@ -125,6 +130,27 @@ final class QueryUtils {
 
         return jsonResponse;
     }
+
+    /**
+     * Convert the {@link InputStream} into a String which contains the
+     * whole JSON response from the server.
+     * */
+    private static String readFromStream(InputStream inputStream) throws IOException {
+        StringBuilder output = new StringBuilder();
+
+        if (inputStream != null) {
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
+            BufferedReader reader = new BufferedReader(inputStreamReader);
+            String line = reader.readLine();
+            while (line != null) {
+                output.append(line);
+                line = reader.readLine();
+            }
+        }
+
+        return output.toString();
+    }
+
 
     /**
      * Return a list of {@link Earthquake} objects that has been built up from
