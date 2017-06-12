@@ -32,7 +32,7 @@ public class EarthquakeActivity extends AppCompatActivity {
 
     /* URL for the top 10 most recent earthquakes from the USGS database */
     public static final String USGS_REQUEST_URL =
-            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=6&limit=10";
+            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=3&limit=10";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +42,6 @@ public class EarthquakeActivity extends AppCompatActivity {
         // Call EarthquakeAsyncTask to download and display Earthquake data.
         new EarthquakeAsyncTask().execute(USGS_REQUEST_URL);
 
-        // Create a fake list of earthquake locations.
-        // TODO: Remove.
-        final ArrayList<Earthquake> earthquakes = QueryUtils.extractEarthquakes();
     }
 
     /**
@@ -72,10 +69,7 @@ public class EarthquakeActivity extends AppCompatActivity {
             }
 
             // Perform the HTTP request for earthquake data and process the response.
-            // TODO: Use the actual URL
-            QueryUtils.fetchEarthquakeData(USGS_REQUEST_URL);
-
-            return QueryUtils.extractEarthquakes();
+            return QueryUtils.fetchEarthquakeData(urls[0]);
         }
 
         @Override

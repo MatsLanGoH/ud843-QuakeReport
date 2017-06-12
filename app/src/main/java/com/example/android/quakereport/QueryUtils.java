@@ -46,10 +46,9 @@ final class QueryUtils {
 
 
     /**
-     * Query the USGS dataset and return an {@link Earthquake} object to represent a single earthquake.
-     * TODO: Return an {@link ArrayList} of {@link Earthquake}s instead.
+     * Query the USGS dataset and return a {@link ArrayList<Earthquake>} to represent a list of earthquakes.
      */
-     static Earthquake fetchEarthquakeData(String requestUrl) {
+     static ArrayList<Earthquake> fetchEarthquakeData(String requestUrl) {
 
         // Create URL object
         URL url = createUrl(requestUrl);
@@ -58,21 +57,18 @@ final class QueryUtils {
         String jsonResponse = null;
         try {
             jsonResponse = makeHttpRequest(url);
-            Log.v(LOG_TAG, "JSON Response: " + jsonResponse);
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
 
-        // Create ArrayList
-
-        // Extract relevant fields from the JSON response and create an {@link Earthquake} object
-
-        // Add the {@link Earthquake} to the ArrayList
+        // Create ArrayList of earthquakes
+        ArrayList<Earthquake> earthquakes;
+        earthquakes = extractEarthquakes(jsonResponse);
 
         // Return ArrayList
-        return null;
-
+        return earthquakes;
     }
+
 
     /**
      * Returns new URL object from the given string URL
@@ -156,21 +152,16 @@ final class QueryUtils {
      * Return a list of {@link Earthquake} objects that has been built up from
      * parsing a JSON response.
      */
-    static ArrayList<Earthquake> extractEarthquakes() {
+    private static ArrayList<Earthquake> extractEarthquakes(String jsonResponse) {
 
         // Create an empty ArrayList that we can start adding earthquakes to.
         ArrayList<Earthquake> earthquakes = new ArrayList<>();
 
-        // Try to parse the SAMPLE_JSON_RESPONSE. If there's a problem with the way the JSON
-        // is formatted, a JSONException exception object will be thrown.
         // Catch the exception so the app doesn't crash, and print the error message to LogCat.
         try {
 
-            // TODO: Parse the response given by the SAMPLE_JSON_RESPONSE string and
-            // build up a list of Earthquake objects with the corresponding data.
-
-            // Convert SAMPLE_RESPONSE_STRING into a JSONObject.
-            JSONObject baseJsonResponse = new JSONObject(SAMPLE_JSON_RESPONSE);
+            // Convert jsonResponse into a JSONObject.
+            JSONObject baseJsonResponse = new JSONObject(jsonResponse);
 
             // Extract "features" JSONArray
             JSONArray earthquakeArray = baseJsonResponse.getJSONArray("features");
