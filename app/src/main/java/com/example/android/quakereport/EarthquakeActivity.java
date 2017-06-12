@@ -25,7 +25,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class EarthquakeActivity extends AppCompatActivity {
 
@@ -44,6 +43,7 @@ public class EarthquakeActivity extends AppCompatActivity {
         new EarthquakeAsyncTask().execute(USGS_REQUEST_URL);
 
         // Create a fake list of earthquake locations.
+        // TODO: Remove.
         final ArrayList<Earthquake> earthquakes = QueryUtils.extractEarthquakes();
     }
 
@@ -73,6 +73,8 @@ public class EarthquakeActivity extends AppCompatActivity {
 
             // Perform the HTTP request for earthquake data and process the response.
             // TODO: Use the actual URL
+            QueryUtils.fetchEarthquakeData(USGS_REQUEST_URL);
+
             return QueryUtils.extractEarthquakes();
         }
 

@@ -6,6 +6,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -34,6 +39,91 @@ final class QueryUtils {
      * directly from the class name QueryUtils (and an object instance of QueryUtils is not needed).
      */
     private QueryUtils() {
+    }
+
+
+    /**
+     * Query the USGS dataset and return an {@link Earthquake} object to represent a single earthquake.
+     * TODO: Return an {@link ArrayList} of {@link Earthquake}s instead.
+     */
+     static Earthquake fetchEarthquakeData(String requestUrl) {
+
+        // Create URL object
+        URL url = createUrl(requestUrl);
+
+        // Perform HTTP request to the URL and receive a JSON response back
+        String jsonResponse = null;
+        try {
+            jsonResponse = makeHttpRequest(url);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error closing input stream", e);
+        }
+
+        // Create ArrayList
+
+        // Extract relevant fields from the JSON response and create an {@link Earthquake} object
+
+        // Add the {@link Earthquake} to the ArrayList
+
+        // Return ArrayList
+        return null;
+
+    }
+
+    /**
+     * Returns new URL object from the given string URL
+     */
+    private static URL createUrl(String stringUrl) {
+        URL url = null;
+
+        try {
+            url = new URL(stringUrl);
+        } catch (MalformedURLException e) {
+            Log.e(LOG_TAG, "Error with creating URL ", e);
+        }
+
+        return url;
+    }
+
+    /**
+     * Make an HTTP request to the given URL and return a String as the response
+     */
+    private static String makeHttpRequest(URL url) throws IOException {
+        String jsonResponse = "";
+
+        if (url == null) {
+            return jsonResponse;
+        }
+
+        HttpURLConnection urlConnection = null;
+        InputStream inputStream = null;
+
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setReadTimeout(10000);
+            urlConnection.setConnectTimeout(15000);
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+            // If the request was successful (response code 200)
+            // then read the input stream and parse the response
+            if (urlConnection.getResponseCode() == 200) {
+                Log.v(LOG_TAG, "Successful response: " + urlConnection.getResponseCode());
+            } else {
+                Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
+            }
+        } catch (IOException e) {
+                Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results", e);
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+            if (inputStream != null) {
+                inputStream.close();
+            }
+        }
+
+        return jsonResponse;
     }
 
     /**
