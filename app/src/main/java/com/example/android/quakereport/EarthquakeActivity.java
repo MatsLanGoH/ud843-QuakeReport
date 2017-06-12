@@ -15,7 +15,11 @@
  */
 package com.example.android.quakereport;
 
+import android.app.LoaderManager;
+import android.content.AsyncTaskLoader;
+import android.content.Context;
 import android.content.Intent;
+import android.content.Loader;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,7 +31,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EarthquakeActivity extends AppCompatActivity {
+public class EarthquakeActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Earthquake>> {
 
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
 
@@ -82,6 +86,43 @@ public class EarthquakeActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public Loader<List<Earthquake>> onCreateLoader(int id, Bundle bundle) {
+        // TODO: Create a new loader for the given URL
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
+        // TODO: Update the UI with the result
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<Earthquake>> loader) {
+        // TODO: Loader reset, so we can clear out our existing data.
+    }
+
+    /**
+     * AsyncTaskLoader to load the earthquake data in the background
+     **/
+    public static class EarthquakeLoader extends AsyncTaskLoader<List<Earthquake>> {
+
+        public EarthquakeLoader(Context context) {
+            super(context);
+            // TODO: Finish implementing this constructor
+        }
+
+        @Override
+        protected void onStartLoading() {
+            forceLoad();
+        }
+
+        @Override
+        public List<Earthquake> loadInBackground() {
+            // TODO: Implement this method
+            return null;
+        }
+    }
 
     /**
      * AsyncTask to download Earthquake data in the background
