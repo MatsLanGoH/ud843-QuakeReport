@@ -16,8 +16,11 @@
 package com.example.android.quakereport;
 
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -105,13 +108,33 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
             }
         });
 
-        // Get a reference to the LoaderManager, in order to interact with loaders.
-        LoaderManager loaderManager = getLoaderManager();
+        // Get a reference to the ConnectivityManager to check state of network connectivity
+        ConnectivityManager cm = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 
-        // Initialize the loader. Pass in the int ID constant defined above and pass in null for
-        // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
-        // because this activity implements the LoaderCallbacks interface).
-        loaderManager.initLoader(EARTHQUAKE_LOADER_ID, null, this);
+        // Get details on the currently active default data network
+        boolean isConnected = activeNetwork != null &&
+                              activeNetwork.isConnectedOrConnecting();
+
+        // If there is a network connection, fetch data.
+        if (isConnected) {
+            // Get a reference to the LoaderManager, in order to interact with loaders.
+            LoaderManager loaderManager = getLoaderManager();
+
+            // Initialize the loader. Pass in the int ID constant defined above and pass in null for
+            // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
+            // because this activity implements the LoaderCallbacks interface).
+            loaderManager.initLoader(EARTHQUAKE_LOADER_ID, null, this);
+        } else {
+            // Otherwise, display error
+            // First hide the loading indicator
+            ProgressBar loadingIndicator = (ProgressBar) findViewById(R.id.loading_indicator);
+            loadingIndicator.setVisibility(GONE);
+
+            // Update empty state with no connection error message
+            mEmptyStateTextView.setText(R.string.no_internet_connection);
+        }
     }
 
     @Override
@@ -123,8 +146,8 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
     @Override
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
         // Hide progress indicator
-        ProgressBar loadingSpinner = (ProgressBar) findViewById(R.id.loading_spinner);
-        loadingSpinner.setVisibility(GONE);
+        ProgressBar loadingIndicator = (ProgressBar) findViewById(R.id.loading_indicator);
+        loadingIndicator.setVisibility(GONE);
 
         // Set empty state text to display "No earthquakes found."
         mEmptyStateTextView.setText(R.string.no_earthquakes);
