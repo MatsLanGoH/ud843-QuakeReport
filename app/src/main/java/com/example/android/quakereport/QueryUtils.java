@@ -37,8 +37,7 @@ final class QueryUtils {
     /**
      * Query the USGS dataset and return a {@link List<Earthquake>} to represent a list of earthquakes.
      */
-     static List<Earthquake> fetchEarthquakeData(String requestUrl) {
-
+    static List<Earthquake> fetchEarthquakeData(String requestUrl) {
         // Create URL object
         URL url = createUrl(requestUrl);
 
@@ -99,7 +98,7 @@ final class QueryUtils {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-                Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results", e);
+            Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -115,7 +114,7 @@ final class QueryUtils {
     /**
      * Convert the {@link InputStream} into a String which contains the
      * whole JSON response from the server.
-     * */
+     */
     private static String readFromStream(InputStream inputStream) throws IOException {
         StringBuilder output = new StringBuilder();
 
