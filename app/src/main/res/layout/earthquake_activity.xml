@@ -22,14 +22,13 @@
     >
 
     <!-- Layout for a list of earthquakes -->
-    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ListView
         android:id="@+id/list"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"
-        android:dividerHeight="0dp"
-        />
+        android:dividerHeight="0dp"/>
 
     <!-- Layout for an empty list view (no data loaded) -->
     <TextView
@@ -37,9 +36,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textSize="?android:textAppearanceMedium"
-        android:visibility="gone"
-        android:text="@string/no_results_found"
-        />
+        android:textAppearance="?android:textAppearanceMedium"/>
 
 </RelativeLayout>
